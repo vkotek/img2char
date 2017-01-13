@@ -10,6 +10,6 @@ options:
 -r  -ratio    The ratio of sides, because this varies for character sets.
 -c  -charset  The a string of characters to use. Leave blank for default.
 
-'''bash
+'''
 python3 ./ test/paris.jpg -s 50 -r 1 -c '!@#$%^&*()/'
 '''

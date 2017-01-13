@@ -4,8 +4,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import sys
 
-# Some testing images
-one = '/Users/ares/Pictures/Yosemite-us.jpg'
+font_family = 'unifont-9.0.06.ttf'
 
 # Character sets you can use, just change value in defaults in main()
 symbs = '±<>!@#$%^&*/-. '
@@ -13,14 +12,16 @@ kanji1 = "蜀輸雄明京手子汁り"
 kanji2 = '置蜀輸雄明京手子汁りしン'
 kanji3 = 'フォントサイズをにして、表示位置を少し調整すると、文字は表示できた。'
 kanji4 = '几仄仇什叩伜卍吃牝佇吠囮妓屁巫彷扮肛呟呵呻姐姑妾怯拗沽泄狗狐爬姜屍獰懃鰻鱈攣讐躙鰹'
-kanji_grade1 = '一右雨円王音下火花貝学気九休玉金空月犬見五口校左三山子四糸字耳七車手十出女小上森人水正生青夕石赤千川先早草足村大男竹中虫町天田土二日入年白八百文木本名目立力林六'
+kanji5= '一右雨円王音下火花貝学気九休玉金空月犬見五口校左三山子四糸字耳七車手十出女小上森人水正生青夕石赤千川先早草足村大男竹中虫町天田土二日入年白八百文木本名目立力林六'
 korean = 'ㄱㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅇㅈㅊㅋㅌㅍㅎㄲㅆᇸ'
-korean2 = 'ㅏ ㅐ ㅑ ㅒ ㅓ ㅔ ㅕ ㅖ ㅗ ㅘ ㅙ ㅚ ㅛ ㅜ ㅝ ㅞ ㅟ ㅠ ㅡ ㅢ ㅣ'
+korean2 = 'ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ '
 
 class Characterize(object):
     """Converts an image to ASCII, you can set the size and input your own characters for it to use.
 
     USAGE:
+
+    python3 ./ <image> [options]
 
     [-i][-image]    image filename
     [-s][-size]     width in characters (integer)
@@ -42,7 +43,7 @@ class Characterize(object):
             print('')
 
     def char2val(self, char):
-        fnt = ImageFont.truetype('/Library/Fonts/Arial Unicode.ttf', 30)
+        fnt = ImageFont.truetype(font_family, 30)
         txt = Image.new('L', (40,40),(255))
         d = ImageDraw.Draw(txt)
         d.text((1,1), char, font=fnt, fill=(0), spacing=0)
@@ -74,14 +75,19 @@ def main():
     # Defaults
     size = 50
     ratio = 1
-    charset = symbs    
+    charset = kanji3
 
     args = sys.argv[1:]
 
+    if args[0] == '-i' or args[0] == '-image':
+        img = args[1]
+        args = args[2:]
+    else:
+        img = args[0]
+        args = args[1:]
+
     for n in range( len(args) ):
-        if args[n] == '-i' or args[n] == '-image':
-            img = args[n+1]
-        elif args[n] == '-c' or args[n] == '-charset':
+        if args[n] == '-c' or args[n] == '-charset':
             charset = args[n+1]
         elif args[n] == '-s' or args[n] == '-size':
             size = int( args[n+1] )

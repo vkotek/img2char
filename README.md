@@ -5,10 +5,16 @@ Convert image to ASCIIesque art using any given character set.
 ```
 python3 ./ <image> [options]
 
-options:
--s  -size     Width of output in characters.
--r  -ratio    The ratio of sides, because this varies for character sets.
--c  -charset  The a string of characters to use. Leave blank for default.
+Image to character map.
+
+positional arguments:
+  img         Path to image.
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -c CHARSET  String of characters to use
+  -s SIZE     Size in characters.
+  -r RATIO    Ratio of characters.
 ```
 ####Example:
 ```bash

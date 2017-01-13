@@ -31,7 +31,8 @@ class Characterize(object):
     def __init__(self):
         pass
 
-    def img2symbols(self, img, size, ratio, charset):
+    # Main function that calls all others
+    def img2chars(self, img, size, ratio, charset):
         charlist = self.chars2dict(charset)
         im = Image.open(img,'r').convert('L')
         resize = (size, int(size/(im.width/(im.height*ratio))))
@@ -42,15 +43,7 @@ class Characterize(object):
                 print(self.getSymbol(x, charlist),end='')
             print('')
 
-    def char2val(self, char):
-        fnt = ImageFont.truetype(font_family, 30)
-        txt = Image.new('L', (40,40),(255))
-        d = ImageDraw.Draw(txt)
-        d.text((1,1), char, font=fnt, fill=(0), spacing=0)
-        value = list(txt.getdata())
-        val = int(sum(value)/len(value))
-        return val
-
+    # Goes through charset and creates a sorted dictionary of chars: brightness
     def chars2dict(self,charset):
         charvals = []
         chardict = {}
@@ -64,24 +57,37 @@ class Characterize(object):
             final.append((key,int((chardict[key]-min(charvals))*multiplier)))
         return sorted(final, key=lambda x: x[1])
 
-    def getSymbol(self, symbol, chardict):
+    # Prints the character and analyzes & returns average brightness.
+    def char2val(self, char):
+        fnt = ImageFont.truetype(font_family, 30)
+        txt = Image.new('L', (40,40),(255))
+        d = ImageDraw.Draw(txt)
+        d.text((1,1), char, font=fnt, fill=(0), spacing=0)
+        value = list(txt.getdata())
+        val = int(sum(value)/len(value))
+        return val
+
+    # Gets the best matching character for given pixel brightness value
+    def getSymbol(self, value, chardict):
         for char in chardict:
-            if symbol <= char[1]+1:
+            if value <= char[1]+1:
                 return char[0]
-        raise SymbolError
+        raise CharacterError
+
 
 def main():
 
-    # Defaults
+    # Default values
     size = 50
     ratio = 1
     charset = kanji3
 
     args = sys.argv[1:]
 
-    img = args[0]
+    img = args[0] # Set first arg to img and remove it.
     args = args[1:]
 
+    # Get and asisgn all args
     for n in range( len(args) ):
         if args[n] == '-c' or args[n] == '-charset':
             charset = args[n+1]
@@ -90,7 +96,7 @@ def main():
         elif args[n] == '-r' or args[n] == '-ratio':
             ratio = float( args[n+1] )
 
-    Characterize().img2symbols(img, size, ratio, charset)
+    Characterize().img2chars(img, size, ratio, charset)
 
 if __name__ == '__main__':
     main()

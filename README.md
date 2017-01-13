@@ -15,4 +15,4 @@ options:
 $ python3 ./ test/paris.jpg -s 50 -r 1 -c '!@#$%^&*()/'
 ```
 
-[example]: https://github.com/vkotek/img2char/raw/master/test/paris.jpg "Paris"
+![alt-text](https://github.com/vkotek/img2char/raw/master/test/example.jpg)

@@ -23,7 +23,7 @@ class Characterize(object):
 
     python3 ./ <image> [options]
 
-    [-i][-image]    image filename
+    options:
     [-s][-size]     width in characters (integer)
     [-c][-charset]  Characters to be used (string) leave blank for default presets
     [-r][-ratio]    width to height ratio"""
@@ -79,12 +79,8 @@ def main():
 
     args = sys.argv[1:]
 
-    if args[0] == '-i' or args[0] == '-image':
-        img = args[1]
-        args = args[2:]
-    else:
-        img = args[0]
-        args = args[1:]
+    img = args[0]
+    args = args[1:]
 
     for n in range( len(args) ):
         if args[n] == '-c' or args[n] == '-charset':

@@ -1,7 +1,7 @@
 # img2char
 Convert image to ASCIIesque art using any given character set.
 
-####Syntax:
+#### Syntax:
 ```
 python3 ./ <image> [options]
 
@@ -16,7 +16,7 @@ optional arguments:
   -s SIZE     Size in characters.
   -r RATIO    Ratio of characters.
 ```
-####Example:
+#### Example:
 ```bash
 $ python3 ./ test/paris.jpg -s 50 -r 1 -c '!@#$%^&*()/'
 ```

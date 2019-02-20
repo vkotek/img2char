@@ -8,13 +8,23 @@ python3 ./ <image> [options]
 Image to character map.
 
 positional arguments:
-  img         Path to image.
+  <image>         path to image or URL
 
 optional arguments:
-  -h, --help  show this help message and exit
-  -c CHARSET  String of characters to use
-  -s SIZE     Size in characters.
-  -r RATIO    Ratio of characters.
+  -h, --help  Show this help message and exit
+  -c CHARSET  String of characters or charset name
+  -s SIZE     Size in characters
+  -r RATIO    Ratio of characters
+  
+charsets:
+ symbols
+ kanji
+ kanji2
+ kanji3
+ kanji4
+ hangul
+ hangul2
+ User specified string..
 ```
 #### Example:
 ```bash

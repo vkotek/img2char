@@ -37,4 +37,4 @@ $ python3 ./ test/paris.jpg -s 50 -r 1 -c '!@#$%^&*()/'
 $ python3 ./ https://url-to-image.com/image.jpg -c "kanji" -s 40
 ```
 
-![alt-text](https://github.com/vkotek/img2char/raw/master/test/deekbat.jpg)
+![alt-text](https://github.com/vkotek/img2char/raw/master/test/deekbat.png)

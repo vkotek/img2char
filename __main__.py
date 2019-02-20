@@ -2,7 +2,7 @@
 # coding: utf-8
 
 from PIL import Image, ImageDraw, ImageFont
-import random
+import random, requests
 import argparse
 
 font_family = 'unifont-9.0.06.ttf'
@@ -43,14 +43,21 @@ class Characterize(object):
 
     options:
     [-s][-size]     width in characters (integer)
-    [-c][-charset]  Characters to be used (string) leave blank for defaults
-    [-r][-ratio]    width to height ratio"""
+    [-c][-charset]  Characters to be used (string) or select set, leave blank for random
+    [-r][-ratio]    width to height ratio
+    
+    charsets:
+    {}""".format(charsets)
+   
 
     def __init__(self):
         pass
 
     # Main function that calls all others
     def img2chars(self, img, size, ratio, charset):
+        if charset in charsets:
+            ratio = charsets[charset][1]
+            charset = charsets[charset][0]
         charlist = self.chars2dict(charset)
         im = Image.open(img, 'r').convert('L')
         resize = (size, int(size/(im.width/(im.height*ratio))))
@@ -91,6 +98,18 @@ class Characterize(object):
             if value <= char[1]+1:
                 return char[0]
         raise CharacterError
+        
+def getIfImage(img):
+    if img[:4] == 'http':
+        filetype = img.split(".")[-1]
+        if str.lower(filetype) not in ['jpg','gif']:
+            print('Invalid filetype')
+            return False
+        r = requests.get(img)
+        uri = 'test/temp.'+filetype
+        open(uri, 'wb').write(r.content)
+        return uri
+    return img
 
 
 def main():
@@ -114,8 +133,8 @@ def main():
     parser.add_argument('-r', dest='ratio', type=float, default=rc[1],
                         help='Ratio of characters. ')
     args = parser.parse_args()
-
-    img = args.image
+    
+    img = getIfImage(args.image)
     charset = args.charset
     size = args.size
     ratio = args.ratio
